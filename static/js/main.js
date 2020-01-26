@@ -1,7 +1,3 @@
-$(document).ready(function () {
-    svg4everybody({});
-});
-
 function getElementByHref(value, wrapper) {
   return document.querySelector((wrapper ? '.' + wrapper + ' ' : '') + 'a[href="#' + value + '"]');
 }
@@ -104,6 +100,8 @@ function openModal() {
   });
 } 
 
+
+
 function main() {
   headerMovement();
   changeActiveMainNavItem();
@@ -151,6 +149,16 @@ function main() {
       element.parentElement.classList.remove('with-data');
     }
   });
+
+  const beforeAfterCount = document.querySelectorAll('.b-dics').length;
+
+  for (let i = 0; i < beforeAfterCount; i++) {
+    new Dics({
+      container: document.querySelectorAll('.b-dics')[i],
+      linesOrientation: 'vertical',
+    });    
+  }
+
 }
 
 let appendNumber = 600;
@@ -166,6 +174,7 @@ const swiper = new Swiper('.swiper-container', {
   },
   slidesPerView: 3,
   spaceBetween: 60,
+  
   pagination: {
     el: '.before-after-progress-scrollbar',
     type: 'progressbar',
@@ -177,14 +186,16 @@ const swiper = new Swiper('.swiper-container', {
 
   breakpoints: {
     0: {
-      slidesPerView: 1,
+      slidesPerView: 1.2,
       spaceBetween: 30,
-      slidesPerView: 'auto',
+      // slidesPerView: 'auto',
     },
     600: {
-      slidesPerView: 1,
+      slidesPerView: 1.4,
       spaceBetween: 40,
-      slidesPerView: 'auto',
+      // centeredSlides: true,
+
+      // slidesPerView: 'auto',
     },
     1024: {
       slidesPerView: 3,
