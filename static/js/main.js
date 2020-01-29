@@ -1,3 +1,43 @@
+const body = document.querySelector('body');
+
+// Main Menu
+const mobNavBtn = document.querySelector('.mob-btn');
+const mobNavBtnClose = document.querySelector('.mob-nav__close');
+const mobNavBg = document.querySelector('.mob-nav__bg');
+const mobNav = document.querySelector('.mob-nav');
+
+function openMainMenu() {
+  body.style.overflow = 'hidden';
+
+  if (this.classList.contains('mob-btn')) 
+    this.classList.add('active');
+
+  mobNav.classList.add('active', 'opening');
+
+  setTimeout(function() {
+    mobNav.classList.remove('opening');    
+    mobNav.classList.add('open');    
+  }, 1000);
+}
+
+function closeMainMenu() {
+  mobNav.classList.add('closing');
+
+  setTimeout(function() {
+    mobNavBtn.classList.remove('active');
+  }, 500);
+
+  setTimeout(function() {
+    mobNav.classList.remove('closing', 'active', 'open');
+    body.style.overflow = '';
+  }, 1000);
+}
+
+mobNavBtn.addEventListener('click', openMainMenu);
+mobNavBtnClose.addEventListener('click', closeMainMenu);
+mobNavBg.addEventListener('click', closeMainMenu);
+// End Main Menu
+
 function getElementByHref(value, wrapper) {
   return document.querySelector((wrapper ? '.' + wrapper + ' ' : '') + 'a[href="#' + value + '"]');
 }
@@ -110,17 +150,6 @@ function main() {
 
   openModal();
 
-  document.querySelector('.mob-nav__bg').addEventListener('click', function(e) {
-    document.querySelector('.mob-btn').classList.remove('active');    
-    document.querySelector('.mob-nav').classList.remove('active');
-    document.querySelector('body').style.overflow = '';
-  });
-
-  document.querySelector('.mob-nav__close').addEventListener('click', function(e) {
-    document.querySelector('.mob-btn').classList.remove('active');    
-    document.querySelector('.mob-nav').classList.remove('active');
-    document.querySelector('body').style.overflow = '';
-  });
 
   document.querySelector('.intro__btn').addEventListener('click', function(e) {
     const contactUsWrapper = document.querySelector('.contact-us-wrapper');
@@ -135,11 +164,7 @@ function main() {
 
   });
 
-  document.querySelector('.mob-btn').addEventListener('click', function(e) {
-    this.classList.toggle('active');
-    document.querySelector('.mob-nav').classList.add('active');
-    document.querySelector('body').style.overflow = 'hidden';
-  });
+  
 
   document.addEventListener('input', function(event) {
     const element = event.target;
