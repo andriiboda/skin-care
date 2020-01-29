@@ -188,14 +188,50 @@ const swiper = new Swiper('.swiper-container', {
     0: {
       slidesPerView: 1.2,
       spaceBetween: 30,
-      // slidesPerView: 'auto',
+    },
+    400: {
+      slidesPerView: 1.3,
+      spaceBetween: 30,
+    },
+    480: {
+      slidesPerView: 1.4,
+      spaceBetween: 30,
+    },
+    576: {
+      slidesPerView: 1.5,
+      spaceBetween: 30,
     },
     600: {
       slidesPerView: 1.4,
       spaceBetween: 40,
-      // centeredSlides: true,
-
-      // slidesPerView: 'auto',
+    },
+    640: {
+      slidesPerView: 1.5,
+      spaceBetween: 40,
+    },
+    680: {
+      slidesPerView: 1.6,
+      spaceBetween: 40,
+    },
+    720: {
+      slidesPerView: 1.7,
+      spaceBetween: 40,
+    },
+    760: {
+      slidesPerView: 1.8,
+      spaceBetween: 40,
+    },
+    800: {
+      slidesPerView: 1.9,
+      spaceBetween: 40,
+    },
+    840: {
+      slidesPerView: 2,
+      spaceBetween: 40,
+    },
+    920: {
+      slidesPerView: 2.3,
+      spaceBetween: 40,
     },
     1024: {
       slidesPerView: 3,
@@ -220,6 +256,7 @@ const swiper = new Swiper('.swiper-container', {
 });
 
 swiper.on('slideChange', function() {
+  console.log(swiper.progress)
   progressCountWrap.querySelector('.before-after-progress-count-current').innerText = swiper.activeIndex + 3;
 });
 
