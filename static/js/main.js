@@ -1,8 +1,11 @@
+"use strict";
+
 const body = document.querySelector('body');
 
 // Main Menu
 const mobNavBtn = document.querySelector('.mob-btn');
 const mobNavBtnClose = document.querySelector('.mob-nav__close');
+const mobNavBtnContatcUs = document.querySelector('.mob-nav__btn');
 const mobNavBg = document.querySelector('.mob-nav__bg');
 const mobNav = document.querySelector('.mob-nav');
 
@@ -20,23 +23,66 @@ function openMainMenu() {
   }, 1000);
 }
 
-function closeMainMenu() {
-  mobNav.classList.add('closing');
+function closeMainMenu(event, callback) {
+  if(mobNav.classList.contains('open')) {
+    mobNav.classList.add('closing');
 
-  setTimeout(function() {
-    mobNavBtn.classList.remove('active');
-  }, 500);
+    setTimeout(function() {
+      mobNavBtn.classList.remove('active');
+    }, 500);
 
-  setTimeout(function() {
-    mobNav.classList.remove('closing', 'active', 'open');
-    body.style.overflow = '';
-  }, 1000);
+    setTimeout(function() {
+      mobNav.classList.remove('closing', 'active', 'open');
+      body.style.overflow = '';
+
+      if (typeof callback == 'function')
+        callback()
+
+    }, 1000);
+  }
 }
 
 mobNavBtn.addEventListener('click', openMainMenu);
 mobNavBtnClose.addEventListener('click', closeMainMenu);
 mobNavBg.addEventListener('click', closeMainMenu);
+mobNavBtnContatcUs.addEventListener('click', function() {
+  return closeMainMenu(null, contactUsOpenForm)
+});
 // End Main Menu
+
+// Contact Us
+const contactUsWrapper = document.querySelector('.contact-us-wrapper');
+const contactUsInner = document.querySelector('.contact-us-inner');
+
+function contactUsOpenForm() {
+  body.style.overflow = 'hidden';
+
+  contactUsWrapper.classList.add('active', 'opening');
+
+    setTimeout(function() {
+      contactUsWrapper.classList.add('open');
+      contactUsInner.classList.add('auto-scroll');
+      contactUsWrapper.classList.remove('opening');
+    }, 3500);
+}
+
+function contactUsCloseForm() {
+  if (contactUsWrapper.classList.contains('open')) {
+    contactUsWrapper.classList.add('closing');
+    contactUsInner.classList.remove('auto-scroll');
+
+    setTimeout(function() {
+      contactUsWrapper.classList.remove('open', 'closing', 'active');
+      body.style.overflow = '';
+    }, 2000);
+  }
+}
+
+document.querySelector('.intro__btn')
+  .addEventListener('click', contactUsOpenForm);
+document.querySelector('.contact-us-form__btn')
+  .addEventListener('click', contactUsCloseForm);
+// End Contact Us
 
 function getElementByHref(value, wrapper) {
   return document.querySelector((wrapper ? '.' + wrapper + ' ' : '') + 'a[href="#' + value + '"]');
@@ -149,22 +195,6 @@ function main() {
   scrollToBlockByMainNavLink();
 
   openModal();
-
-
-  document.querySelector('.intro__btn').addEventListener('click', function(e) {
-    const contactUsWrapper = document.querySelector('.contact-us-wrapper');
-
-    contactUsWrapper.classList.add('active');
-    contactUsWrapper.classList.add('opening');
-
-    setTimeout(function() {
-      contactUsWrapper.classList.add('open');
-      contactUsWrapper.classList.remove('opening');
-    }, 3600);
-
-  });
-
-  
 
   document.addEventListener('input', function(event) {
     const element = event.target;
