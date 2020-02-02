@@ -206,12 +206,16 @@ function changeActiveMainNavItem() {
 }
 // End Main Nav Active Link
 
-function scrollToBlockByMainNavLink() {
-  const anchors = document.querySelectorAll('.main-nav__link[href*="#"]');
+function scrollToBlockByMainNavLink(linkClass, callback) {
+  const anchors = document.querySelectorAll(linkClass + '[href*="#"]');
 
   for (let anchor of anchors) {
+
     anchor.addEventListener('click', function(event) {
       event.preventDefault();
+
+      if (typeof callback == 'function')
+        callback();
 
       const blockId = anchor.getAttribute('href');
       const section = document.querySelector(blockId);
@@ -255,7 +259,11 @@ function main() {
   changeActiveMainNavItem();
 
   if (document.querySelector('.main-nav')) {
-    scrollToBlockByMainNavLink();
+    scrollToBlockByMainNavLink('.main-nav__link');
+  }
+
+  if (document.querySelector('.mob-nav__list')) {
+    scrollToBlockByMainNavLink('.mob-nav__link', closeMainMenu);
   }
 
   if (document.querySelector('.click-down')) {
@@ -302,7 +310,6 @@ if (document.querySelector('.swiper-container')) {
     on: {
       init: function () {
         swiperCurrentSlide(this)
-        // progressCountWrap.querySelector('.before-after-progress-count-current').innerText = this.activeIndex + 3;
         progressCountWrap.querySelector('.before-after-progress-count-total').innerText = this.slides.length;
       },
     },
